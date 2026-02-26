@@ -59,6 +59,67 @@ public class StudentRepository {
         return list;
     }
 
+
+    // Updated the database with addStudent() and INSERT INTO table the data I entered
+    public void addStudent(Scanner scanner) {
+
+        System.out.print("Enter Student ID: ");
+        String studentId = scanner.nextLine();
+
+        System.out.print("Enter Name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter Gender: ");
+        String gender = scanner.nextLine();
+
+        System.out.print("Enter Course: ");
+        String course = scanner.nextLine();
+
+        System.out.print("Enter Address: ");
+        String address = scanner.nextLine();
+
+        System.out.print("Enter Nationality: ");
+        String nationality = scanner.nextLine();
+
+        System.out.print("Enter Age: ");
+        int age = scanner.nextInt();
+
+        System.out.print("Enter Year: ");
+        int year = scanner.nextInt();
+
+        System.out.print("Enter Section: ");
+        int section = scanner.nextInt();
+
+        System.out.print("Enter Contact No: ");
+        int contactNo = scanner.nextInt();
+        scanner.nextLine();
+
+        String sql = "INSERT INTO tbl_StudentDetails (studentId, name, gender, course, address, nationality, age, year, section, contactNo) "
+                   + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, studentId);
+            pstmt.setString(2, name);
+            pstmt.setString(3, gender);
+            pstmt.setString(4, course);
+            pstmt.setString(5, address);
+            pstmt.setString(6, nationality);
+            pstmt.setInt   (7, age);
+            pstmt.setInt   (8, year);
+            pstmt.setInt   (9, section);
+            pstmt.setInt   (10, contactNo);
+
+            int rowsAffected = pstmt.executeUpdate();
+            pstmt.close();
+
+            if (rowsAffected > 0) {
+                System.out.println("Student added successfully!");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error adding student: " + e.getMessage());
+        }
+    }
+
     // Close the database connection when done
     public void close() {
         try {
